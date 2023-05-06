@@ -35,7 +35,9 @@ class GPS(Node):
         except (ValueError, IOError) as err:
             self.get_logger().error(f"GPS Error! {err}", throttle_duration_sec=60)
         
-def main():
+def main(args=None):
+    rclpy.init(args=args)
+
     gps_node = GPS()
 
     rclpy.spin(gps_node)
