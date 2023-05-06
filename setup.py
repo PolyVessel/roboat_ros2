@@ -21,7 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'talker = roboat_ros2.pub:main',
-            'listener = roboat_ro2.sub:main',
+            'listener = roboat_ros2.sub:main',
 
         ],
     },
