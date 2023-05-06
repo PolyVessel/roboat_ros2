@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 import spidev
 from ublox_gps import UbloxGps
-from roboat_interfaces import GPSInfo
+from roboat_interfaces.msg import GPSInfo
 
 class GPS(Node):
     def __init__(self):
