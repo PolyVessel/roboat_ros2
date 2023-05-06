@@ -51,11 +51,10 @@ class GPS(Node):
                                                                        time_data.hour, time_data.min,
                                                                        time_data.sec)
 
-            if time_data.valid.validDate != True or time_data.valid.validTime != True:
+            if not (time_data.valid.validDate == 1 and time_data.valid.validTime == 1):
                 self.get_logger().warn(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
 
-            self.get_logger().info(f"validDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
-            subprocess.run(["date", "-u", "--set={}".format(gps_utc)], timeout=2)
+            subprocess.run(["date", "-u", "--set={}".format(gps_utc)], timeout=2, stdout=subprocess.DEVNULL)
         except Exception as e:
             self.get_logger().error(f"GPS Error when setting time! {e}", throttle_duration_sec=60)
 
