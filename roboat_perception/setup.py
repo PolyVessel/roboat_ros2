@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'roboat_ros2'
+package_name = 'roboat_perception'
 
 setup(
     name=package_name,
@@ -14,15 +14,13 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='roboat',
-    maintainer_email='roboat@todo.todo',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    maintainer_email='<>',
+    description='Roboats Sensors and Perception',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = roboat_ros2.pub:main',
-            'listener = roboat_ros2.sub:main',
-
+            'gps = roboat_perception.gps:main'
         ],
     },
 )
