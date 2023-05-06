@@ -47,8 +47,8 @@ class GPS(Node):
 
             # convert time_data to a form the date -u command will accept: "20140401 17:32:04"
             gps_utc = "{:04d}{:02d}{:02d} {:02d}:{:02d}:{:02d}".format(time_data.year, time_data.month, time_data.day,
-                                                                       time_data.hour, time_data.minute,
-                                                                       time_data.second)
+                                                                       time_data.hour, time_data.min,
+                                                                       time_data.sec)
 
             if time_data.valid.validDate != True or time_data.valid.validTime != True:
                 self.get_logger().error(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
