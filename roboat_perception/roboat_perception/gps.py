@@ -4,6 +4,7 @@ import spidev
 from ublox_gps import UbloxGps
 from roboat_interfaces.msg import GPSInfo
 import subprocess
+import os
 
 class GPS(Node):
     def __init__(self):
