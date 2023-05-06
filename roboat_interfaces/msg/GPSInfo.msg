@@ -1,4 +1,4 @@
 float64 lon
 float64 lat
-float64 groundSpeed
-time measurementTime
+float64 ground_speed
+time measurement_time
