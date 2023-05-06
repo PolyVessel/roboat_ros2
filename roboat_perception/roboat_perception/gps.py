@@ -28,7 +28,7 @@ class GPS(Node):
             gps_info = GPSInfo()
             gps_info.lon = geo.lon
             gps_info.lat = geo.lat
-            gps_info.ground_speed = geo.gSpeed
+            gps_info.ground_speed = float(geo.gSpeed)
             gps_info.header.stamp = self.get_clock().now().to_msg();
 
             self.publisher_.publish(gps_info)
