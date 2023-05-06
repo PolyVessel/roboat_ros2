@@ -15,6 +15,8 @@ class GPS(Node):
         self.timer = self.create_timer(timer_period, self.poll_gps)    
 
         self.publisher_ = self.create_publisher(GPSInfo, '/sensor/gps_info', 10)
+        
+        self.get_logger().info("GPS Initialized")
     
     def __del__(self):
         self.port.close()
@@ -28,7 +30,7 @@ class GPS(Node):
             gps_info = GPSInfo()
             gps_info.lon = geo.lon
             gps_info.lat = geo.lat
-            gps_info.ground_speed = float(geo.gSpeed)
+            gps_info.ground_speed = geo.gSpeed
             gps_info.header.stamp = self.get_clock().now().to_msg();
 
             self.publisher_.publish(gps_info)
