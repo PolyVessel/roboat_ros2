@@ -1,4 +1,4 @@
-std_msgs/Header header
+std_msgs/Header header #frame_id not used
 
 float64 lon
 float64 lat
