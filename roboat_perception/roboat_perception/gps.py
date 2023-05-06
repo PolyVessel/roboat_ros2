@@ -52,14 +52,10 @@ class GPS(Node):
                                                                        time_data.sec)
 
             if time_data.valid.validDate != True or time_data.valid.validTime != True:
-                self.get_logger().error(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
+                self.get_logger().warn(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
 
-            # Checks if root, so we don't get a passwd prompt
-            if os.geteuid() != 0:  # type: ignore
-                self.get_logger().error(f"We are not root when setting time!", throttle_duration_sec=60)
-                return;
-
-            subprocess.run(["sudo", "date", "-u", "--set={}".format(gps_utc)], timeout=2)
+            self.get_logger().info(f"validDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
+            subprocess.run(["date", "-u", "--set={}".format(gps_utc)], timeout=2)
         except Exception as e:
             self.get_logger().error(f"GPS Error when setting time! {e}", throttle_duration_sec=60)
 
