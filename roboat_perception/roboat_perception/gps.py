@@ -3,6 +3,7 @@ from rclpy.node import Node
 import spidev
 from ublox_gps import UbloxGps
 from roboat_interfaces.msg import GPSInfo
+import subprocess
 
 class GPS(Node):
     def __init__(self):
@@ -12,7 +13,10 @@ class GPS(Node):
 
         
         timer_period = 2  # seconds
-        self.timer = self.create_timer(timer_period, self.poll_gps)    
+        self.gps_pos_timer = self.create_timer(timer_period, self.poll_gps)  
+
+        timer_period = 2  # seconds
+        self.gps_time_timer = self.create_timer(timer_period, self.set_time)    
 
         self.publisher_ = self.create_publisher(GPSInfo, '/sensor/gps_info', 10)
         
@@ -36,6 +40,28 @@ class GPS(Node):
             self.publisher_.publish(gps_info)
         except (ValueError, IOError) as err:
             self.get_logger().error(f"GPS Error! {err}", throttle_duration_sec=60)
+    
+    def set_time(self):
+        try:
+            time_data = self.gps.date_time()
+
+            # convert time_data to a form the date -u command will accept: "20140401 17:32:04"
+            gps_utc = "{:04d}{:02d}{:02d} {:02d}:{:02d}:{:02d}".format(time_data.year, time_data.month, time_data.day,
+                                                                       time_data.hour, time_data.minute,
+                                                                       time_data.second)
+
+            if time_data.valid.validDate != True or time_data.valid.validTime != True:
+                self.get_logger().error(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
+
+            # Checks if root, so we don't get a passwd prompt
+            if os.geteuid() != 0:  # type: ignore
+                self.get_logger().error(f"We are not root when setting time!", throttle_duration_sec=60)
+                return;
+
+            subprocess.run(["sudo", "date", "-u", "--set={}".format(gps_utc)], timeout=2)
+        except Exception as e:
+            self.get_logger().error(f"GPS Error when setting time! {e}", throttle_duration_sec=60)
+
         
 def main(args=None):
     rclpy.init(args=args)
