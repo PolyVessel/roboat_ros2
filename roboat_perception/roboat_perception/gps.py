@@ -39,7 +39,7 @@ class GPS(Node):
             gps_info.header.stamp = self.get_clock().now().to_msg();
 
             self.publisher_.publish(gps_info)
-            self.get_logger().info(f"Successfully published first gps_coords: {geo.lon}, {geo.lat} at {geo.gSpeed} mm/s", once=True)
+            self.get_logger().info(f"Successfully published first gps_coords: {geo.lat}, {geo.lon} at {geo.gSpeed} mm/s", once=True)
         except (ValueError, IOError) as err:
             self.get_logger().error(f"GPS Error! {err}", throttle_duration_sec=60)
     
