@@ -7,6 +7,9 @@
   <maintainer email="dylan@starink.com">Dylan Starink</maintainer>
   <license>MIT</license>
 
+  <depend>python3-sparkfun-ublox-gps-pip</depend>
+  <depend>python3-spidev-pip</depend>
+
   <exec_depend>roboat_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
