@@ -13,7 +13,6 @@ find_package(std_msgs REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GPSInfo.msg"
   DEPENDENCIES std_msgs # Add packages that above messages depend on
-) 
+)
 
 ament_package()
-
