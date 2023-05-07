@@ -16,7 +16,7 @@ class GPS(Node):
         timer_period = 2  # seconds
         self.gps_pos_timer = self.create_timer(timer_period, self.poll_gps)  
 
-        timer_period = 2  # seconds
+        timer_period = 60  # seconds
         self.gps_time_timer = self.create_timer(timer_period, self.set_time)    
 
         self.publisher_ = self.create_publisher(GPSInfo, '/sensor/gps_info', 10)
@@ -39,6 +39,7 @@ class GPS(Node):
             gps_info.header.stamp = self.get_clock().now().to_msg();
 
             self.publisher_.publish(gps_info)
+            self.get_logger().info(f"Successfully published first gps_coords: {geo.lon}, {geo.lat} at {geo.gSpeed} mm/s", once=True)
         except (ValueError, IOError) as err:
             self.get_logger().error(f"GPS Error! {err}", throttle_duration_sec=60)
     
@@ -55,6 +56,7 @@ class GPS(Node):
                 self.get_logger().warn(f"Time or Date is not Valid!\nvalidDate: {time_data.valid.validDate}\nvalidTime: {time_data.valid.validTime}", throttle_duration_sec=60)
 
             subprocess.run(["date", "-u", "--set={}".format(gps_utc)], timeout=2, stdout=subprocess.DEVNULL)
+            self.get_logger().info(f"First Set Time to {gps_utc} UTC", once=True)
         except Exception as e:
             self.get_logger().error(f"GPS Error when setting time! {e}", throttle_duration_sec=60)
 
