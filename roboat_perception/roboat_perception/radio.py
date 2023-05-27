@@ -9,10 +9,11 @@ import os
 
 import serial
 
-from lib.util import TimeoutException, time_limit
+from .lib.util import TimeoutException, time_limit
+from .lib.depacketizer import Depacketizer
+
 
 import RPi.GPIO as GPIO
-from lib.depacketizer import Depacketizer
 
 class RadioResponseBad(Exception): pass
 
