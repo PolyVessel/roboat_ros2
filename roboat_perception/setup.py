@@ -1,7 +1,7 @@
 from setuptools import setup
 
 package_name = 'roboat_perception'
-submodules = package_name + "/lib"
+submodules = 'roboat_perception/lib'
 
 setup(
     name=package_name,
