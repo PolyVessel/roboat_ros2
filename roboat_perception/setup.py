@@ -1,11 +1,12 @@
 from setuptools import setup
 
 package_name = 'roboat_perception'
+submodules = 'roboat_perception/lib'
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=[package_name],
+    packages=[package_name, submodules],
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -20,7 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'gps = roboat_perception.gps:main'
+            'gps = roboat_perception.gps:main',
+            'radio = roboat_perception.radio:main'
         ],
     },
 )
