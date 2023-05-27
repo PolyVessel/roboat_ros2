@@ -7,9 +7,11 @@
   <maintainer email="dylan@starink.com">Dylan Starink</maintainer>
   <license>MIT</license>
 
-  <depend>python3-sparkfun-ublox-gps-pip</depend>
-  <depend>python3-spidev-pip</depend>
-
+  <exec_depend>python3-sparkfun-ublox-gps-pip</exec_depend>
+  <exec_depend>python3-spidev-pip</exec_depend>
+  <exec_depend>python3-spidev-pip</exec_depend>
+  <exec_depend>python3-serial</exec_depend>
+  <exec_depend>python-rpi.gpio-pip</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
 
