@@ -34,7 +34,7 @@ class LoRaRadio(Node):
         GPIO.setup(AUX, GPIO.IN)
 
         timer_period = 1  # seconds
-        self.radio_poll_timer = self.create_timer(timer_period, self.poll_gps)  
+        self.radio_poll_timer = self.create_timer(timer_period, self.poll_radio)  
 
         #self.publisher_ = self.create_publisher(NavSatFix, '/sensor/gpsfix', 10)
         
@@ -51,6 +51,9 @@ class LoRaRadio(Node):
     def __del__(self):
         self.serial_port.close()
         GPIO.cleanup()
+
+    def poll_radio(self):
+        pass
 
     def _normal_mode(self):
         """Will block until module is free and can swap the mode"""
