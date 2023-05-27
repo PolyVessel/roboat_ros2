@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'gps = roboat_perception.gps:main'
+            'gps = roboat_perception.gps:main',
+            'radio = roboat_perception.radio:main'
         ],
     },
 )
