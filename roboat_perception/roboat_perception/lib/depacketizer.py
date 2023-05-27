@@ -1,6 +1,6 @@
 
 import collections, hashlib
-from lib.packet import OVERHEAD, MAX_PAYLOAD, PacketizerException, Packet
+from .packet import OVERHEAD, MAX_PAYLOAD, PacketizerException, Packet
 
 BUFFER_LEN = 2048
 class Depacketizer:
