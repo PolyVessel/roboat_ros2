@@ -88,7 +88,7 @@ class LoRaRadio(Node):
         """Will block until module is free and can swap the mode"""
 
         self._block_until_module_free()
-        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M0, GPIO.HIGH)
         GPIO.output(self.M1, GPIO.HIGH)
 
     def ping_radio(self):
