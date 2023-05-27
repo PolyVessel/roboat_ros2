@@ -110,7 +110,7 @@ class LoRaRadio(Node):
         if len(radio_resp) != 4:
             raise RadioResponseBad(f"Did not return correct data length! Response: {radio_resp}")
 
-        print(f"Radio Ping response {radio_resp} with length {len(radio_resp)}")
+        self.get_logger().info(f"Radio Ping response {radio_resp} with length {len(radio_resp)}")
 
         # Asserts that radio is a 433MHz model and 
         # received correct amount of data
