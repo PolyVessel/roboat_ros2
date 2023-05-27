@@ -21,17 +21,17 @@ class LoRaRadio(Node):
     def __init__(self):
         super().__init__('lora_radio')
 
-        M0 = 2
-        M1 = 27
-        AUX = 22
+        self.M0 = 2
+        self.M1 = 27
+        self.AUX = 22
 
         self.serial_port = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=3, write_timeout=3)
 
         GPIO.setmode(GPIO.BCM)
 
-        GPIO.setup(M0, GPIO.OUT)
-        GPIO.setup(M1, GPIO.OUT)
-        GPIO.setup(AUX, GPIO.IN)
+        GPIO.setup(self.M0, GPIO.OUT)
+        GPIO.setup(self.M1, GPIO.OUT)
+        GPIO.setup(self.AUX, GPIO.IN)
 
         timer_period = 1  # seconds
         self.radio_poll_timer = self.create_timer(timer_period, self.poll_radio)  
@@ -59,8 +59,8 @@ class LoRaRadio(Node):
         """Will block until module is free and can swap the mode"""
 
         self._block_until_module_free()
-        GPIO.output(self.m0_pin, GPIO.LOW)
-        GPIO.output(self.m1_pin, GPIO.LOW)
+        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M1, GPIO.LOW)
     
     def _wake_up_mode(self):
         """Will block until module is free and can swap the mode
@@ -70,8 +70,8 @@ class LoRaRadio(Node):
         """
 
         self._block_until_module_free()
-        GPIO.output(self.m0_pin, GPIO.HIGH)
-        GPIO.output(self.m1_pin, GPIO.LOW)
+        GPIO.output(self.M0, GPIO.HIGH)
+        GPIO.output(self.M1, GPIO.LOW)
 
     def _power_saving_mode(self):
         """Will block until module is free and can swap the mode
@@ -81,15 +81,15 @@ class LoRaRadio(Node):
         """
 
         self._block_until_module_free()
-        GPIO.output(self.m0_pin, GPIO.LOW)
-        GPIO.output(self.m1_pin, GPIO.HIGH)
+        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M1, GPIO.HIGH)
 
     def _sleep_mode(self):
         """Will block until module is free and can swap the mode"""
 
         self._block_until_module_free()
-        GPIO.output(self.m0_pin, GPIO.LOW)
-        GPIO.output(self.m1_pin, GPIO.HIGH)
+        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M1, GPIO.HIGH)
 
     def ping_radio(self):
         """Requests version number of radio
@@ -131,7 +131,7 @@ class LoRaRadio(Node):
         return serial_resp
 
     def _block_until_module_free(self):
-        while not GPIO.input(self.aux_pin):
+        while not GPIO.input(self.AUX):
             pass # Block until Aux is 1
     
     def transmit(self, data: bytes):
