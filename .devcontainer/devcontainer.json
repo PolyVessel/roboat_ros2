@@ -3,18 +3,20 @@
     "privileged": true,
     "build": {
         "dockerfile": "Dockerfile",
+        "args":{
+            "USERNAME": "ros",
+            "WORKSPACE": "${containerWorkspaceFolder}"
+        }
     },
     "workspaceFolder": "/home/ws",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws/src,type=bind",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws,type=bind",
     "customizations": {
         "vscode": {
             "extensions":[
-                "ms-vscode.cpptools",
-                "ms-vscode.cpptools-themes",
                 "twxs.cmake",
                 "donjayamanne.python-extension-pack",
-                "eamodio.gitlens",
-                "ms-iot.vscode-ros"
+                "ms-iot.vscode-ros",
+                "jgclark.vscode-todo-highlight"
             ]
         }
     },
@@ -27,5 +29,5 @@
         "--net=host",
         "-e", "DISPLAY=${env:DISPLAY}"
     ],
-    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y"
+    "postCreateCommand": "rosdep update && rosdep install --from-paths src --ignore-src -y && sudo chown -R ros /home/ws/"
 }
