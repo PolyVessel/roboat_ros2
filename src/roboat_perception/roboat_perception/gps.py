@@ -95,7 +95,7 @@ class GPS(Node):
 
         return payload
 
-        
+
 def main(args=None):
     rclpy.init(args=args)
 
