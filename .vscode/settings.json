@@ -1,0 +1,17 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ws/install/roboat_perception/lib/python3.10/site-packages",
+        "/home/ws/install/roboat_interfaces/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "/usr/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ws/install/roboat_perception/lib/python3.10/site-packages",
+        "/home/ws/install/roboat_interfaces/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "/usr/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.typeCheckingMode": "off"
+}

@@ -1,4 +1,4 @@
-from typing import NamedTuple
+from typing import List, NamedTuple
 import rclpy
 from rclpy.node import Node
 import spidev
@@ -26,7 +26,7 @@ class GPS(Node):
 
                 if geo.numSV == 0:
                     self.get_logger().info("No GPS Signal", throttle_duration_sec=60)
-
+                
                 # From https://github.com/FrankBu0616/ros2_zed_f9r_gps/blob/main/zed_f9r_gps/zed_f9r_gps/publish_gps_data.py
                 msg = NavSatFix()
 
@@ -56,7 +56,7 @@ class GPS(Node):
         finally:
             self.port.close()
 
-def main(args=None):
+def main(args: List[str] | None = None) -> None:
     rclpy.init(args=args)
 
     gps_node = GPS()

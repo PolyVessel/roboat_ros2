@@ -17,7 +17,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y python3-pip ssh
 
 # Install setuptools version that doesn't have deprecation warnings
-RUN pip install setuptools==58.2.0
+RUN pip install setuptools==58.2.0 mypy
 ENV SHELL /bin/bash
 
 # ********************************************************
@@ -28,4 +28,4 @@ COPY --chown=$USERNAME:$USER_UID .bashrc /home/$USERNAME/.bashrc
 
 USER $USERNAME
 
-ENTRYPOINT [ "entrypoint.sh", "/bin/bash" ]
+ENTRYPOINT ["/bin/bash" ]
