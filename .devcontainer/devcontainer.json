@@ -1,6 +1,7 @@
 {
     "name": "ROS 2 Development Container",
     "privileged": true,
+    "remoteUser": "ros",
     "build": {
         "dockerfile": "Dockerfile",
         "args":{
@@ -29,5 +30,5 @@
         "--net=host",
         "-e", "DISPLAY=${env:DISPLAY}"
     ],
-    "postCreateCommand": "rosdep update && rosdep install --from-paths src --ignore-src -y && sudo chown -R ros /home/ws/"
+    "postCreateCommand": "rosdep update && rosdep install --from-paths src --ignore-src -y"
 }
