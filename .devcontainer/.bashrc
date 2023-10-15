@@ -6,4 +6,3 @@ if [ -f /home/ws/install/setup.bash ]
 then
   source /home/ws/install/setup.bash
 fi
- 
