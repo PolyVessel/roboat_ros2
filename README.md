@@ -3,7 +3,7 @@
 ### Packages
 
 - `roboat_interfaces` - All the Message and Service definitions
-- `roboat_perception` - Nodes gathering information from the environemnt GPS, Radio, etc.
+- `roboat_perception` - Nodes gathering information from the environment (GPS, Radio, etc.)
 
 ### Development Environment
 
