@@ -14,7 +14,9 @@ def compile_protos():
     
     files_in_protos_dir = os.listdir(protos_dir)
     
-    if len(files_in_protos_dir) == 0:
+    proto_files = [file for file in files_in_protos_dir if file.endswith('.proto')]
+    
+    if len(proto_files) == 0:
         print("No Protobuf Files found to compile")
         return
     
