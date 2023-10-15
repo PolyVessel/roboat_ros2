@@ -8,7 +8,7 @@ ARG USER_GID=$USER_UID
 # Create the user
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    #
+    # Add sudo support.
     && apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
@@ -20,12 +20,6 @@ RUN apt-get install -y python3-pip ssh
 RUN pip install setuptools==58.2.0 mypy
 ENV SHELL /bin/bash
 
-# ********************************************************
-# * Anything else you want to do like clean up goes here *
-# ********************************************************
-
 COPY --chown=$USERNAME:$USER_UID .bashrc /home/$USERNAME/.bashrc
 
 USER $USERNAME
-
-ENTRYPOINT ["/bin/bash" ]
