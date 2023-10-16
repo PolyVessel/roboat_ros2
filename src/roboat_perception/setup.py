@@ -7,7 +7,7 @@ import sys
 
 
 def compile_protos():
-    protos_dir = "./protos"
+    protos_dir = "../../protos"
     generated_files_dir = "./roboat_perception/pb"
     
     check_call(f"rm -f {generated_files_dir}/*_pb2.py", shell=True)
