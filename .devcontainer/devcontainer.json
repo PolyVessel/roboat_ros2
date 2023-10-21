@@ -1,0 +1,34 @@
+{
+    "name": "ROS 2 Development Container",
+    "privileged": true,
+    "remoteUser": "ros",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args":{
+            "USERNAME": "ros",
+            "WORKSPACE": "${containerWorkspaceFolder}"
+        }
+    },
+    "workspaceFolder": "/home/ws",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws,type=bind",
+    "customizations": {
+        "vscode": {
+            "extensions":[
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "ms-iot.vscode-ros",
+                "jgclark.vscode-todo-highlight"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "unix:0",
+        "ROS_LOCALHOST_ONLY": "1",
+        "ROS_DOMAIN_ID": "42"
+    },
+    "runArgs": [
+        "--net=host",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ],
+    "postCreateCommand": "rosdep update && rosdep install --from-paths src --ignore-src -y"
+}
