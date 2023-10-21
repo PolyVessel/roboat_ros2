@@ -14,11 +14,12 @@
     "customizations": {
         "vscode": {
             "extensions":[
-                "twxs.cmake",
-                "donjayamanne.python-extension-pack",
-                "ms-iot.vscode-ros",
-                "jgclark.vscode-todo-highlight"
-            ]
+				"twxs.cmake",
+				"donjayamanne.python-extension-pack",
+				"ms-iot.vscode-ros",
+				"jgclark.vscode-todo-highlight",
+				"peterj.proto"
+			]
         }
     },
     "containerEnv": {
