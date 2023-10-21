@@ -13,5 +13,6 @@
         "/opt/ros/humble/local/lib/python3.10/dist-packages",
         "/usr/local/lib/python3.10/dist-packages"
     ],
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "files.eol": "\n"
 }
