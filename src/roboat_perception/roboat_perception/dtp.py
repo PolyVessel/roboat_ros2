@@ -1,7 +1,5 @@
-# e5d52855
-
-def djb2_calc(dataL: bytes) -> bytes:
-    hash = 5381
-    for b in dataL:
-        hash = (((hash << 5) + hash) + b) & 0xFFFFFFFF
+def hash_fnv1a_32(data: bytes):
+    hash = 0x811c9dc5
+    for x in data:
+        hash = ((ord(x) ^ hash) * 0x01000193) & 0xFFFFFFFF
     return hash
