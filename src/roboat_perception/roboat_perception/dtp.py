@@ -10,15 +10,18 @@ def hash_fnv1a_32(data: Bits) -> Bits:
 # packet num & total packet num is 1,
 # create bits object for pck num, 16 bits
 # add data, add checksum
-def create_packet(data: Bits) -> Bits:
-    store = BitArray('data')
+def create_packet(data: Bits) -> BitArray:
+    store = BitArray(data)
     check_sum = hash_fnv1a_32(data)
-    total_pck_num = 1 + store + check_sum
-    result = Bits(uintbe = total_pck_num, length=16)
-    return result
+    # adding packet num
+    store.prepend(BitArray(1))
+    # adding hashed data to be sent
+    store.append(check_sum[0:16])
+    # output is full message
+    return store
     # calculate size
 
-check = create_packet(b'abc123')
+check = create_packet(Bits(b'abc123'))
 print(check)
 # 
 # def change_to_bits(data: Bits) -> Bits:
