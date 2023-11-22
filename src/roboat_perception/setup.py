@@ -58,6 +58,7 @@ setup(
     entry_points={
         'console_scripts': [
             'gps = roboat_perception.gps:main'
+            'radio = roboat_perception.radio:main'
         ],
     },
     cmdclass={
