@@ -60,10 +60,8 @@ class Radio(Node):
         success = False
         for s in rev:
                 print(f"0x{s:02x}")
-                print(s)
-                print(rev)
                 if s == 195:
-                    success = True
+                    success = False
         if success == False:
             radio.destroy_node()
             rclpy.shutdown()
