@@ -57,7 +57,6 @@ class Radio(Node):
 
         rev = self.radio_ser.read(size=4)
 
-        success = True
         if len(rev) != 4:
             self.get_logger().info(f"Not Expected Byte Count, Got {rev}: Terminating")
             raise SystemExit
@@ -69,6 +68,7 @@ class Radio(Node):
         GPIO.cleanup()
 
 
+
 def main(args=None):
     rclpy.init(args=args)
 
@@ -78,8 +78,6 @@ def main(args=None):
         rclpy.spin(radio)
     except SystemExit:
         rclpy.logging.get_logger("Quitting").info('Done')
-    except KeyboardInterrupt:
-        rclpy.logging.get_logger("Quitting").info('Recieved Keyboard Interrupt: Terminating')
 
     radio.destroy_node()
     rclpy.shutdown()
