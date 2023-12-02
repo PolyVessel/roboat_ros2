@@ -64,6 +64,8 @@ class Radio(Node):
                 if s == 195:
                     success = False
         if success == False:
+            self.get_logger().info("No Radio Response: Terminating")
+            GPIO.cleanup()
             sys.exit()
         GPIO.cleanup()
 
