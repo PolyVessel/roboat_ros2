@@ -59,7 +59,7 @@ class Radio(Node):
         for s in rev:
                 print(f"0x{s:02x}")
                 print(s)
-                print("{s:02x}")
+                print(rev)
 
         GPIO.cleanup()
 
