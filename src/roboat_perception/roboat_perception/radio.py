@@ -15,7 +15,7 @@ class Radio(Node):
         self.publisher_ = self.create_publisher(String, 'toTopic', 10)
         self.subscription = self.create_subscription(String, 'fromTopic', self.listener_callback, 10)
         
-        timer_period = 0.5
+        timer_period = 30
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
         
         self.self_test()
@@ -58,6 +58,8 @@ class Radio(Node):
         rev = radio_ser.read(size=6)
         for s in rev:
                 print(f"0x{s:02x}")
+                print(s)
+                print("{s:02x}")
 
         GPIO.cleanup()
 
