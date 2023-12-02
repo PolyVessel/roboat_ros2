@@ -2,6 +2,7 @@ import serial
 import RPi.GPIO as GPIO
 from time import sleep
 from typing import List, NamedTuple
+import sys
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -63,10 +64,7 @@ class Radio(Node):
                 if s == 195:
                     success = False
         if success == False:
-            radio = Radio()
-            radio.destroy_node()
-            rclpy.shutdown()
-            print("you shouldn't see this")
+            sys.exit()
         GPIO.cleanup()
 
 
