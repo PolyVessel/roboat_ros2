@@ -24,7 +24,7 @@ class Radio(Node):
         self.get_logger().info("Message Sent")
     
     def listener_callback(self,rcvdMSG):
-        self.get_logger().info("Message Recieved: " % rcvdMSG.data) # Add Unserialization Function
+        self.get_logger().info("Message Recieved: " + rcvdMSG.data) # Add Unserialization Function
 
 def main(args=None):
     rclpy.init(args=args)
