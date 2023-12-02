@@ -62,7 +62,7 @@ class Radio(Node):
         for s in rev:
                 print(f"0x{s:02x}")
                 if s == 195:
-                    success = False
+                    success = True
         if success == False:
             self.get_logger().info("No Radio Response: Terminating")
             GPIO.cleanup()
