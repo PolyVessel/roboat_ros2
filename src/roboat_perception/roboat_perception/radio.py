@@ -56,11 +56,18 @@ class Radio(Node):
         radio_ser.write(b'\xC3\xC3\xC3')
 
         rev = radio_ser.read(size=6)
+
+        success = False
         for s in rev:
                 print(f"0x{s:02x}")
                 print(s)
                 print(rev)
-
+                if s == 195:
+                    success = True
+        if success == False:
+            radio.destroy_node()
+            rclpy.shutdown()
+            print("you shouldn't see this")
         GPIO.cleanup()
 
 
