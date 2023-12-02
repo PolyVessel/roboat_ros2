@@ -78,6 +78,8 @@ def main(args=None):
         rclpy.spin(radio)
     except SystemExit:
         rclpy.logging.get_logger("Quitting").info('Done')
+    except KeyboardInterrupt:
+        rclpy.logging.get_logger("Quitting").info('Recieved Keyboard Interrupt: Terminating')
 
     radio.destroy_node()
     rclpy.shutdown()
