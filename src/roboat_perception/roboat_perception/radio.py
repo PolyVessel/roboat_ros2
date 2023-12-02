@@ -2,7 +2,6 @@ import serial
 import RPi.GPIO as GPIO
 from time import sleep
 from typing import List, NamedTuple
-import sys
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -61,11 +60,11 @@ class Radio(Node):
         success = True
         if len(rev) != 4:
             self.get_logger().info(f"Not Expected Byte Count, Got {rev}: Terminating")
-            sys.exit()
+            raise SystemExit
         elif rev[0] != 0xC3:
             self.get_logger().info(f"Not Expected First Byte, Got {rev}: Terminating")
-            sys.exit
-        
+            raise SystemExit
+
     def __del__(self):
         GPIO.cleanup()
 
@@ -75,7 +74,10 @@ def main(args=None):
 
     radio = Radio()
     
-    rclpy.spin(radio)
+    try:
+        rclpy.spin(radio)
+    except SystemExit:
+        rclpy.logging.get_logger("Quitting").info('Done')
 
     radio.destroy_node()
     rclpy.shutdown()
