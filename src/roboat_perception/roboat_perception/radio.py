@@ -43,7 +43,7 @@ class Radio(Node):
         GPIO.setup(M1, GPIO.OUT)
         GPIO.setup(AUX, GPIO.IN)
 
-        radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
+        self.radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 
         GPIO.output(M0, GPIO.HIGH)
         GPIO.output(M1, GPIO.HIGH)
@@ -54,19 +54,18 @@ class Radio(Node):
         while GPIO.input(AUX) == GPIO.LOW:
                 pass
 
-        radio_ser.write(b'\xC3\xC3\xC3')
+        self.radio_ser.write(b'\xC3\xC3\xC3')
 
-        rev = radio_ser.read(size=6)
+        rev = self.radio_ser.read(size=4)
 
         success = False
-        for s in rev:
-                print(f"0x{s:02x}")
-                if s == 195:
-                    success = True
+        if len(rev) == 4:
+            success = True
+       
         if success == False:
             self.get_logger().info("No Radio Response: Terminating")
-            GPIO.cleanup()
             sys.exit()
+    def __del__(self):
         GPIO.cleanup()
 
 
