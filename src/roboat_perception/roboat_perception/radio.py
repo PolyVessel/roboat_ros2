@@ -1,3 +1,6 @@
+import serial
+import RPi.GPIO as GPIO
+from time import sleep
 from typing import List, NamedTuple
 import rclpy
 from rclpy.node import Node
@@ -15,6 +18,37 @@ class Radio(Node):
         timer_period = 0.5
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
         
+        def radio_initialization(self):
+            M0 = 0
+            M1 = 2
+
+            AUX = 3
+
+            GPIO.setmode(GPIO.BCM)
+
+            GPIO.setup(M0, GPIO.OUT)
+            GPIO.setup(M1, GPIO.OUT)
+            GPIO.setup(AUX, GPIO.IN)
+
+            radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
+
+            GPIO.output(M0, GPIO.HIGH)
+            GPIO.output(M1, GPIO.HIGH)
+
+
+            sleep(1)
+
+            while GPIO.input(AUX) == GPIO.LOW:
+                    pass
+
+            radio_ser.write(b'\xC3\xC3\xC3')
+
+            rev = radio_ser.read(size=6)
+            for s in rev:
+                    print(f"0x{s:02x}")
+
+
+            GPIO.cleanup()
         self.get_logger().info("Radio Initialized")
     
     def publish(self):
