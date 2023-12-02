@@ -60,7 +60,7 @@ class Radio(Node):
 
         success = False
         if len(rev) == 4:
-            success = True
+            success = False
        
         if success == False:
             self.get_logger().info("No Radio Response: Terminating")
