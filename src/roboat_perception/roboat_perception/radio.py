@@ -58,8 +58,10 @@ class Radio(Node):
 
         rev = self.radio_ser.read(size=4)
 
-        success = False
-        if len(rev) == 4:
+        success = True
+        if len(rev) != 4:
+            success = False
+        if rev[1] == 0xC3:
             success = False
        
         if success == False:
