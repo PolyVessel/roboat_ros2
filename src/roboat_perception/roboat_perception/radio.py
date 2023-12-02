@@ -63,6 +63,7 @@ class Radio(Node):
                 if s == 195:
                     success = False
         if success == False:
+            radio = Radio()
             radio.destroy_node()
             rclpy.shutdown()
             print("you shouldn't see this")
