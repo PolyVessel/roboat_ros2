@@ -60,13 +60,12 @@ class Radio(Node):
 
         success = True
         if len(rev) != 4:
-            success = False
-        elif rev[0] == 0xC3:
-            success = False
-       
-        if success == False:
-            self.get_logger().info("No Radio Response: Terminating")
+            self.get_logger().info(f"Not Expected Byte Count, Got {rev}: Terminating")
             sys.exit()
+        elif rev[0] != 0xC3:
+            self.get_logger().info(f"Not Expected First Byte, Got {rev}: Terminating")
+            sys.exit
+        
     def __del__(self):
         GPIO.cleanup()
 
