@@ -18,11 +18,26 @@ class Radio(Node):
         timer_period = 0.5
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
         
+        self.self_test()
+        self.get_logger().info("Radio Initialized")
+    
+    def publish(self):
+        msg = String()
+        msg.data = '000001' # Replace with Ported Data && Convert to Serialized Format
+        self.publisher_.publish(msg)
+        self.get_logger().info("Message Sent")
+    
+    def listener_callback(self,rcvdMSG):
+        self.get_logger().info("Message Recieved: " + rcvdMSG.data) # Add Unserialization Function
+    
+    def self_test(self):
         M0 = 0
         M1 = 2
+
         AUX = 3
 
         GPIO.setmode(GPIO.BCM)
+
         GPIO.setup(M0, GPIO.OUT)
         GPIO.setup(M1, GPIO.OUT)
         GPIO.setup(AUX, GPIO.IN)
@@ -45,16 +60,6 @@ class Radio(Node):
                 print(f"0x{s:02x}")
 
         GPIO.cleanup()
-        self.get_logger().info("Radio Initialized")
-    
-    def publish(self):
-        msg = String()
-        msg.data = '000001' # Replace with Ported Data && Convert to Serialized Format
-        self.publisher_.publish(msg)
-        self.get_logger().info("Message Sent")
-    
-    def listener_callback(self,rcvdMSG):
-        self.get_logger().info("Message Recieved: " + rcvdMSG.data) # Add Unserialization Function
 
 
 def main(args=None):
