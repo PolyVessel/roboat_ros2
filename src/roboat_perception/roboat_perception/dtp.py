@@ -21,14 +21,21 @@ def create_packet(data: Bits) -> BitArray:
     return store
     # calculate size
 
-check = create_packet(Bits(b'abc123'))
-print(check)
-# 
-# def change_to_bits(data: Bits) -> Bits:
-#     # Get the hashing output
-#     store = hash_fnv1a_32(data)
-#     # Convert to bits
-#     txt = Bits(store)
-#     output = txt.__str__
-
-# .
+# takes bits, checks proper size, checks if the hash is accurate
+def decode_packet(data: BitArray) -> Bits:
+    # Store packet number to find length of message
+    packet_num = data[0]
+    # Store part of message that should be compared to
+    checker = data[-16:]
+    # Store message
+    if packet_num:
+        data2 = data[1:-16]
+    else:
+        data2 = data[:-16]
+    # Store part of message to hash & compare with
+    checksum = hash_fnv1a_32(data2[8:])
+    # Compare
+    if checksum[0:16] != checker:
+        return None
+    # Returning message
+    return data2[8:]
