@@ -26,11 +26,11 @@ def decode_packet(data: BitArray) -> Bits:
     # Store part of message to compare
     checker = data[-16:]
     # Store message
-    data2 = data[1:-16]
+    data2 = data[32:-16]
     # Store part of message to hash & compare with
     checksum = hash_fnv1a_32(data2[8:])
     # Compare
     if checksum[0:16] != checker:
         return None
     # Returning message
-    return data2[8:]
+    return data[16:32] + data2[8:]
