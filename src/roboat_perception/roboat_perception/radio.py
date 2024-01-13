@@ -18,9 +18,9 @@ class Radio(Node):
         timer_period = 30
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
 
-        M0 = 0
-        M1 = 2
-        AUX = 3
+        self.M0 = 0
+        self.M1 = 2
+        self.AUX = 3
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(M0, GPIO.OUT)
@@ -69,23 +69,23 @@ class Radio(Node):
             raise SystemExit
 
     def set_sleep_mode(self):
-        GPIO.output(M0, GPIO.HIGH)
-        GPIO.output(M1, GPIO.HIGH)
+        GPIO.output(self.M0, GPIO.HIGH)
+        GPIO.output(self.M1, GPIO.HIGH)
     
     def set_power_saving_mode(self):
-        GPIO.output(M0, GPIO.LOW)
-        GPIO.output(M1, GPIO.HIGH)
+        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M1, GPIO.HIGH)
     
     def set_wake_up_mode(self):
-        GPIO.output(M0, GPIO.HIGH)
-        GPIO.output(M1, GPIO.LOW)
+        GPIO.output(self.M0, GPIO.HIGH)
+        GPIO.output(self.M1, GPIO.LOW)
     
     def set_normal_mode(self):
-        GPIO.output(M0, GPIO.LOW)
-        GPIO.output(M1, GPIO.LOW)
+        GPIO.output(self.M0, GPIO.LOW)
+        GPIO.output(self.M1, GPIO.LOW)
     
     def block_until_radio_ready(self):
-        while GPIO.input(AUX) == GPIO.LOW:
+        while GPIO.input(self.AUX) == GPIO.LOW:
                 pass
 
     def __del__(self):
