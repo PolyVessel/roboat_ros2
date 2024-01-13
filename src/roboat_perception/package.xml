@@ -6,11 +6,16 @@
   <description>Roboats Sensors and Perception</description>
   <maintainer email="dylan@starink.com">Dylan Starink</maintainer>
   <license>MIT</license>
+  
+  <depend>protobuf-dev</depend>
 
   <depend>python3-sparkfun-ublox-gps-pip</depend>
   <depend>python3-spidev-pip</depend>
+
   <depend>protobuf-dev</depend>
   <depend>python-bitstring-pip</depend>
+  <depend>python3-protobuf</depend>
+  <depend>python3-bitstring</depend>
 
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
