@@ -13,7 +13,7 @@ class Radio(Node):
         super().__init__('radio')
 
         self.publisher_ = self.create_publisher(String, 'recv', 10)
-        self.subscription = self.create_subscription(String, 'send', self.listener_callback, 10)
+        self.subscription = self.create_subscription(String, 'send', self.listener_callback, 0.5)
         
         timer_period = 30
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
