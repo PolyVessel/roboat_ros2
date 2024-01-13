@@ -18,9 +18,9 @@ class Radio(Node):
         timer_period = 30
         self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
 
-        self.M0 = 0
-        self.M1 = 2
-        self.AUX = 3
+        self.M0 = 17
+        self.M1 = 27
+        self.AUX = 22
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.M0, GPIO.OUT)
