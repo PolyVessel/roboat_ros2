@@ -14,7 +14,7 @@ class Radio(Node):
 
         self.publisher_ = self.create_publisher(String, 'recv', 10)
         self.subscription = self.create_subscription(String, 'send', self.listener_callback, 10)
-        
+
         self.M0 = 17
         self.M1 = 27
         self.AUX = 22
@@ -27,11 +27,10 @@ class Radio(Node):
 
         self.self_test()
         self.get_logger().info("Radio Initialized")
+        self.set_normal_mode()
 
         timer_period = 1
-        self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
-
-        self.set_power_saving_mode()
+        self.timer = self.create_timer(timer_period, self.publish) # Temperary Timer
     
     def publish(self):
         self.get_logger().info("Started Reading")
@@ -47,14 +46,12 @@ class Radio(Node):
 
     
     def listener_callback(self,sendMSG):
-        self.set_wake_up_mode()
         sleep(1)
         self.block_until_radio_ready()
         self.get_logger().info("Sending Message: " + sendMSG.data) 
         encoded = sendMSG.data.encode('utf-8')
         self.radio_ser.write(encoded)
         self.get_logger().info("Message Sent")
-        self.set_power_saving_mode()
     
     def self_test(self):
         self.set_sleep_mode()
