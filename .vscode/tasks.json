@@ -18,6 +18,7 @@
 			"type": "colcon",
 			"args": [
 				"build",
+				"--symlink-install",
 				"--event-handlers",
 				"console_cohesion+",
 				"--base-paths",
