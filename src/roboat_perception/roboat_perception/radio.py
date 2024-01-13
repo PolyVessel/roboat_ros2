@@ -37,10 +37,9 @@ class Radio(Node):
         if GPIO.input(self.AUX) == GPIO.LOW:
             self.block_until_radio_ready()
             msg = self.radio_ser.read(size=10)
-            if len(msg>2):
-                sendMSG.data = msg.decode('utf-8')
-                self.publisher_.publish(msg)
-                self.get_logger().info("Message Recieved")
+            sendMSG.data = msg.decode('utf-8')
+            self.publisher_.publish(msg)
+            self.get_logger().info("Message Recieved")
         else:
             self.get_logger().info("No Message Recieved")
 
