@@ -23,9 +23,9 @@ class Radio(Node):
         self.AUX = 3
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(M0, GPIO.OUT)
-        GPIO.setup(M1, GPIO.OUT)
-        GPIO.setup(AUX, GPIO.IN)
+        GPIO.setup(self.M0, GPIO.OUT)
+        GPIO.setup(self.M1, GPIO.OUT)
+        GPIO.setup(self.AUX, GPIO.IN)
         self.radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
 
         self.self_test()
