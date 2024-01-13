@@ -49,10 +49,9 @@ class Radio(Node):
         sleep(1)
         self.block_until_radio_ready()
         self.get_logger().info("Sending Message: " + sendMSG.data) 
-        #encoded = sendMSG.data.encode('utf-8')
-        #self.get_logger().info(encoded) 
-        #self.radio_ser.write(encoded)
-        self.radio_ser.write(sendMSG.data)
+        encoded = sendMSG.data.encode('utf-8')
+        self.get_logger().info(encoded) 
+        self.radio_ser.write(encoded)
         self.get_logger().info("Message Sent")
     
     def self_test(self):
