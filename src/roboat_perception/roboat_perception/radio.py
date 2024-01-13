@@ -15,9 +15,6 @@ class Radio(Node):
         self.publisher_ = self.create_publisher(String, 'recv', 10)
         self.subscription = self.create_subscription(String, 'send', self.listener_callback, 10)
         
-        timer_period = 1
-        self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
-
         self.M0 = 17
         self.M1 = 27
         self.AUX = 22
@@ -30,6 +27,10 @@ class Radio(Node):
 
         self.self_test()
         self.get_logger().info("Radio Initialized")
+
+        timer_period = 1
+        self.timer = self.create_timer(timer_period, self.publish) # Temp Timer
+
         self.set_power_saving_mode()
     
     def publish(self):
