@@ -19,8 +19,6 @@ class TestDTP(unittest.TestCase):
         data = Bits(b'abc123')
         store = create_packet(data)
         output = decode_packet(store)
-        print(f"method output: {output}")
-        print(Bits(b'abc123'))
         self.assertEqual(output, DecodedPacket(Bits(b'abc123'), BitArray('0x0001'), BitArray('0x0001')))
     
     def test_decode_packet_invalid(self):

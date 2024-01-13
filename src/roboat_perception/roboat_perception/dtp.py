@@ -19,7 +19,6 @@ def hash_fnv1a_32(data: Bits) -> Bits:
 def create_packet(data: Bits) -> BitArray:
     store = BitArray(data)
     check_sum = hash_fnv1a_32(data)
-    print(f"check_sum: {check_sum}")
     
     # Total Pkt Num is 1
     store.prepend(BitArray(uint=1, length=16))
@@ -30,7 +29,6 @@ def create_packet(data: Bits) -> BitArray:
     # adding hashed data to be sent
     store.append(check_sum[0:16])
     # outputting the full message
-    print(f"bitarray: {store}")
     return store
 
 # takes bits, checks proper size, checks if the hash is accurate
@@ -39,12 +37,9 @@ def decode_packet(packet: BitArray) ->  DecodedPacket | None:
     checker = packet[-16:]
     # Store message
     message = packet[32:-16]
-    print(f"data2: {message}")
     # Store part of message to hash & compare with
     checksum = hash_fnv1a_32(message)
     # Compare
-    print(f"check: {checker}")
-    print(f"checksum: {checksum}")
     if checksum[0:16] != checker:
         return None
     # Returning message
