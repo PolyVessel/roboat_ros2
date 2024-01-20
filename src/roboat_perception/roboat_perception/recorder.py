@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import uuid
 import serial
 import RPi.GPIO as GPIO
@@ -22,7 +22,7 @@ class Recorder(Node):
         self.subscription = self.create_subscription(NavSatFix, '/sensor/gpsfix', self.gps_callback, 10)
         self.directory = directory
 
-    def gps_callback(self, getMsg):
+    def gps_callback(self, getMsg: NavSatFix):
         coordinates = (getMsg.latitude, getMsg.longitude)
         timestamp = getMsg.header.stamp
         filename = self.generate_unique_filename()
