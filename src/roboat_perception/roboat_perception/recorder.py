@@ -26,6 +26,7 @@ class Recorder(Node):
         coordinates = (getMsg.latitude, getMsg.longitude)
         timestamp = getMsg.header.stamp
         filename = self.generate_unique_filename()
+        
         with open(os.path.join(self.directory, filename), 'a+') as collect_info:
             writer_object = writer(collect_info)
             writer_object.writerow([timestamp, coordinates[0], coordinates[1]])
@@ -66,7 +67,7 @@ class Recorder(Node):
         
 def main():
     rclpy.init()
-    node = Recorder('~/logs')
+    node = Recorder('/home/roboat/logs')
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
