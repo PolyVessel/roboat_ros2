@@ -16,11 +16,11 @@ class GPSSubscriber(Node):
         self.get_logger().info('start up:')
         
         
-    def listener_callback(self, msg):
+    def listener_callback(self, msg: NavSatFix):
         coordinates = (msg.longitude, msg.latitude)
         alt = msg.altitude
         time = msg.header.stamp
-        direction = msg.position_coverance
+        direction = msg.position_covariance
         
         self.get_logger().info('coordinates: "%s"' % coordinates)
         self.get_logger().info('altitude: "%s"' % alt)
