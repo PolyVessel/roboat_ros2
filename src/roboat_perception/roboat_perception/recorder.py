@@ -42,7 +42,7 @@ class Recorder(Node):
     def generate_unique_filename(self):
         # unique_id = str(uuid.uuid4())
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-        filename = f"{timestamp}"
+        filename = f"{timestamp}.csv"
         return os.path.join(self.directory, filename)
                 
    
