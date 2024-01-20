@@ -67,7 +67,7 @@ class Recorder(Node):
 def main():
     rclpy.init()
     node = Recorder('/home/ros/logs')
-    rclpy.spin(node.node)
+    rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
 
