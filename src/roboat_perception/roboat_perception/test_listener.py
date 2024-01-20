@@ -22,10 +22,10 @@ class GPSSubscriber(Node):
         time = msg.header.stamp
         direction = msg.position_covariance
         
-        self.get_logger().info('coordinates: "%s"' % coordinates)
-        self.get_logger().info('altitude: "%s"' % alt)
-        self.get_logger().info('time stamp: "%s"' % time)
-        self.get_logger().info('direction: "%s"' % direction)
+        self.get_logger().info(f'coordinates: "{coordinates}"')
+        self.get_logger().info(f'altitude: "{alt}"')
+        self.get_logger().info(f'time stamp: "{time}"')
+        self.get_logger().info(f'direction: "{direction}"')
         
         
 def main(args: List[str] | None = None):
