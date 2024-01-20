@@ -43,7 +43,7 @@ class Recorder(Node):
         # unique_id = str(uuid.uuid4())
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         filename = f"{timestamp}.csv"
-        return os.path.join(self.directory, filename)
+        return filename
                 
    
     def delete_oldest_file(self):
