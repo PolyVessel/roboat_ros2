@@ -13,7 +13,7 @@ from sensor_msgs.msg import NavSatFix
 from csv import writer
 import os as os
 import uuid
-import glob 
+from glob import glob 
 
 
 class Recorder(Node):
