@@ -29,7 +29,7 @@ class Recorder(Node):
         
         with open(os.path.join(self.directory, filename), 'a+') as collect_info:
             writer_object = writer(collect_info)
-            writer_object.writerow([timestamp, coordinates[0], coordinates[1]])
+            writer_object.writerow([timestamp.sec, coordinates[0], coordinates[1]])
             
         self.delete_oldest_file()
 
