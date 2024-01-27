@@ -21,19 +21,21 @@ class Recorder(Node):
         super().__init__('recorder')
         self.subscription = self.create_subscription(NavSatFix, '/sensor/gpsfix', self.gps_callback, 10)
         self.directory = directory
+        self.filename = self.generate_unique_filename()
+        self.file_path = os.path.join(self.directory, self.filename)
 
     def gps_callback(self, getMsg: NavSatFix):
         coordinates = (getMsg.latitude, getMsg.longitude)
         timestamp = getMsg.header.stamp
-        filename = self.generate_unique_filename()
-        file_path = os.path.join(self.directory, filename)
+        
 
         # Check file size before writing
-        if os.path.exists(file_path) and os.path.getsize(file_path) > 5_000_000:
+        if os.path.getsize(self.file_path) > 5_000_000:
             # Create a new file if the size exceeds the limit
-            filename = self.generate_unique_filename()
-        
-        with open(os.path.join(self.directory, filename), 'a+') as collect_info:
+            self.filename = self.generate_unique_filename()
+            self.file_path = os.path.join(self.directory, self.filename)
+
+        with open(os.path.join(self.directory, self.filename), 'a+') as collect_info:
             writer_object = writer(collect_info)
             writer_object.writerow([timestamp.sec, coordinates[0], coordinates[1]])
             
