@@ -7,10 +7,14 @@ from rclpy.node import Node
 from std_msgs.msg import String
 import subprocess
 import os
+from dtp import create_packet, decode_packet
+from sliplib import Driver
+from bitstring import Bits, BitArray
 
 class Radio(Node):
     def __init__(self):
         super().__init__('radio')
+        self.slip_driver=Driver()
 
         self.publisher_ = self.create_publisher(String, 'recv', 10)
         self.subscription = self.create_subscription(String, 'send', self.listener_callback, 10)
@@ -23,7 +27,7 @@ class Radio(Node):
         GPIO.setup(self.M0, GPIO.OUT)
         GPIO.setup(self.M1, GPIO.OUT)
         GPIO.setup(self.AUX, GPIO.IN)
-        self.radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2)
+        self.radio_ser = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=0)
 
         self.self_test()
         self.get_logger().info("Radio Initialized")
@@ -36,11 +40,16 @@ class Radio(Node):
         self.get_logger().info("Started Reading")
         if GPIO.input(self.AUX) == GPIO.LOW:
             self.block_until_radio_ready()
-            msg = self.radio_ser.read(size=30)
-            self.get_logger().info(msg) 
-            #MSG = msg.decode('utf-8')
-            #self.publisher_.publish(MSG)
-            self.get_logger().info("Message Recieved")
+            
+            msg = self.radio_ser.read(size=100)
+            bytes_list = self.slip_driver.receive(msg)
+            for bytes in bytes_list:
+                decoded = decode_packet(BitArray(bytes))
+                MSG = decoded.data
+            
+                self.get_logger().info("Message Recieved")
+                self.publisher_.publish(MSG)
+            
         else:
             self.get_logger().info("No Message Recieved")
 
@@ -48,10 +57,13 @@ class Radio(Node):
     def listener_callback(self,sendMSG):
         sleep(1)
         self.block_until_radio_ready()
+        
         self.get_logger().info("Sending Message: " + sendMSG.data) 
-        encoded = sendMSG.data.encode('utf-8')
-        self.get_logger().info(encoded) 
-        self.radio_ser.write(encoded)
+        encoded = Bits(sendMSG.data.encode('utf-8'))
+        packet = self.slip_driver.send(create_packet(encoded).bytes)
+        
+        self.get_logger().info(packet) 
+        self.radio_ser.write(packet)
         self.get_logger().info("Message Sent")
     
     def self_test(self):
