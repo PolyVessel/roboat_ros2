@@ -26,6 +26,12 @@ class Recorder(Node):
         coordinates = (getMsg.latitude, getMsg.longitude)
         timestamp = getMsg.header.stamp
         filename = self.generate_unique_filename()
+        file_path = os.path.join(self.directory, filename)
+
+        # Check file size before writing
+        if os.path.exists(file_path) and os.path.getsize(file_path) > 5_000_000:
+            # Create a new file if the size exceeds the limit
+            filename = self.generate_unique_filename()
         
         with open(os.path.join(self.directory, filename), 'a+') as collect_info:
             writer_object = writer(collect_info)
