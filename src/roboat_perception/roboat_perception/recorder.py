@@ -30,7 +30,7 @@ class Recorder(Node):
         
 
         # Check file size before writing
-        if os.path.getsize(self.file_path) > 5_000_000:
+        if os.path.exists(self.file_path) and os.path.getsize(self.file_path) > 5_000_000:
             # Create a new file if the size exceeds the limit
             self.filename = self.generate_unique_filename()
             self.file_path = os.path.join(self.directory, self.filename)
