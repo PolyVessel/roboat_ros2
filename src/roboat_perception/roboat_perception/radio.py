@@ -39,7 +39,7 @@ class Radio(Node):
     def publish(self):
         self.get_logger().info("Started Reading")
         if GPIO.input(self.AUX) == GPIO.LOW:
-            self.block_until_radio_ready()
+            sleep(0.5)
             
             msg = self.radio_ser.read(size=100)
             bytes_list = self.slip_driver.receive(msg)
