@@ -75,7 +75,10 @@ class Radio(Node):
 
         self.radio_ser.write(b'\xC3\xC3\xC3')
 
+        sleep(0.5)
+
         rev = self.radio_ser.read(size=4)
+    
 
         if len(rev) != 4:
             self.get_logger().info(f"Not Expected Byte Count, Got {rev}: Terminating")
