@@ -7,8 +7,8 @@ from rclpy.node import Node
 from std_msgs.msg import String
 import subprocess
 import os
-from dtp import create_packet, decode_packet
-from sliplib import Driver
+from .data.dtp import create_packet, decode_packet
+from .data.sliplib import Driver
 from bitstring import Bits, BitArray
 
 class Radio(Node):
