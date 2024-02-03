@@ -14,12 +14,12 @@ from bitstring import Bits, BitArray
 class Radio(Node):
     def __init__(self):
         super().__init__('radio')
-        self.slip_driver=Driver()
+        self.slip_driver=Driver() #sliplib
 
         self.publisher_ = self.create_publisher(String, 'recv', 10)
-        self.subscription = self.create_subscription(String, 'send', self.listener_callback, 10)
+        self.subscription = self.create_subscription(String, 'send', self.write_to_radio, 10)
 
-        self.M0 = 17
+        self.M0 = 17 #eletrical pin numbers
         self.M1 = 27
         self.AUX = 22
 
@@ -33,36 +33,35 @@ class Radio(Node):
         self.get_logger().info("Radio Initialized")
         self.set_normal_mode()
 
-        timer_period = 1
-        self.timer = self.create_timer(timer_period, self.publish) # Temperary Timer
+        timer_period_sec = 1
+        self.timer = self.create_timer(timer_period_sec, self.read_from_radio) # Temperary Timer
     
-    def publish(self):
+    def read_from_radio(self): # Needs to be tested
         self.get_logger().info("Started Reading")
         if GPIO.input(self.AUX) == GPIO.LOW:
+            self.block_until_radio_ready()
             sleep(0.5)
             
-            msg = self.radio_ser.read(size=100)
-            bytes_list = self.slip_driver.receive(msg)
-            for bytes in bytes_list:
+            buffer = self.radio_ser.read(size=100)
+            #insert checks to see if radio sent data to buffer
+            message_list = self.slip_driver.receive(buffer)
+            for bytes in message_list:
                 decoded = decode_packet(BitArray(bytes))
-                MSG = decoded.data
+                msg = decoded.data.bytes.decode('utf-8')
             
-                self.get_logger().info("Message Recieved")
-                self.publisher_.publish(MSG)
-            
+                self.get_logger().info("Message Recieved: " + msg)
+                self.publisher_.publish(msg)
         else:
             self.get_logger().info("No Message Recieved")
 
     
-    def listener_callback(self,sendMSG):
-        sleep(1)
+    def write_to_radio(self,sendMSG):
         self.block_until_radio_ready()
-        
         self.get_logger().info("Sending Message: " + sendMSG.data) 
-        encoded = Bits(sendMSG.data.encode('utf-8'))
-        packet = self.slip_driver.send(create_packet(encoded).bytes)
         
-        self.get_logger().info(packet) 
+        msg_bits = Bits(sendMSG.data.encode('utf-8'))
+        packet = self.slip_driver.send(create_packet(msg_bits).bytes)
+         
         self.radio_ser.write(packet)
         self.get_logger().info("Message Sent")
     
