@@ -1,7 +1,7 @@
-from roboat_perception.dtp import DecodedPacket
-from roboat_perception.dtp import hash_fnv1a_32
-from roboat_perception.dtp import create_packet
-from roboat_perception.dtp import decode_packet
+from roboat_perception.data.dtp import DecodedPacket
+from roboat_perception.data.dtp import hash_fnv1a_32
+from roboat_perception.data.dtp import create_packet
+from roboat_perception.data.dtp import decode_packet
 from bitstring import Bits, BitArray
 import unittest
 
