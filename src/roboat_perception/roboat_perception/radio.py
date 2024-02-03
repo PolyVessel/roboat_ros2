@@ -37,22 +37,16 @@ class Radio(Node):
         self.timer = self.create_timer(timer_period_sec, self.read_from_radio) # Temperary Timer
     
     def read_from_radio(self): # Needs to be tested
-        self.get_logger().info("Started Reading")
-        if GPIO.input(self.AUX) == GPIO.LOW:
-            self.block_until_radio_ready()
-            sleep(0.5)
-            
-            buffer = self.radio_ser.read(size=100)
+        buffer = self.radio_ser.read(size=100)
             #insert checks to see if radio sent data to buffer
-            message_list = self.slip_driver.receive(buffer)
-            for bytes in message_list:
-                decoded = decode_packet(BitArray(bytes))
-                msg = decoded.data.bytes.decode('utf-8')
+        message_list = self.slip_driver.receive(buffer)
+        for bytes in message_list:
+            decoded = decode_packet(BitArray(bytes))
+            msg = decoded.data.bytes.decode('utf-8')
             
-                self.get_logger().info("Message Recieved: " + msg)
-                self.publisher_.publish(msg)
-        else:
-            self.get_logger().info("No Message Recieved")
+            self.get_logger().info("Message Recieved: " + msg)
+            self.publisher_.publish(msg)
+
 
     
     def write_to_radio(self,sendMSG):
