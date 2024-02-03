@@ -58,7 +58,9 @@ setup(
     entry_points={
         'console_scripts': [
             'gps = roboat_perception.gps:main',
-            'imu = roboat_perception.imu:main'
+            'imu = roboat_perception.imu:main',
+            'radio = roboat_perception.radio:main',
+            'recorder = roboat_perception.recorder:main'
         ],
     },
     cmdclass={

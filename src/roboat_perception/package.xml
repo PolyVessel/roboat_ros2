@@ -12,6 +12,7 @@
   <depend>python3-sparkfun-ublox-gps-pip</depend>
   <depend>python3-spidev-pip</depend>
   <depend>python3-adafruit-circuitpython-bno055-pip</depend>
+
   <depend>python-bitstring-pip</depend>
   <depend>python3-protobuf</depend>
   <depend>python3-bitstring</depend>
