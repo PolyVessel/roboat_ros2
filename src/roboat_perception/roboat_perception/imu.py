@@ -58,8 +58,7 @@ class IMU(Node):
 
             self.publisher_.publish(msg)
             
-            self.get_logger().info(f"Successfully published first IMU Quaternion -> x: 
-                                    {quaternion.x}, y: {quaternion.y}, z: {quaternion.z}, w: {quaternion.w}", once = True)
+            self.get_logger().info(f"Successfully published first IMU Quaternion -> x: {quaternion.x}, y: {quaternion.y}, z: {quaternion.z}, w: {quaternion.w}", once = True)
 
         except (ValueError, IOError) as err:
             self.get_logger().error(f"IMU Error! {err}")
