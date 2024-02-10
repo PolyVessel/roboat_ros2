@@ -25,9 +25,9 @@ class IMU(Node):
 
     def publish(self) -> None:
         try:
-            quaternion = self.sensor.quaternion()
-            ang_velocity = self.sensor.angular_velocity()
-            lin_acceleration = self.sensor.linear_acceleration()
+            (qx, qy, qz, qw) = self.sensor.quaternion
+            (gx, gy, gz) = self.sensor.gyro
+            (lax, lay, laz) = self.sensor.linear_acceleration
 
             msg = Imu()
             msg.header = Header()
@@ -37,28 +37,28 @@ class IMU(Node):
             msg.orientation_covariance[0] = -1
 
             quat = Quaternion()
-            quat.x = quaternion.x
-            quat.y = quaternion.y
-            quat.z = quaternion.z
-            quat.w = quaternion.w
+            quat.x = qx
+            quat.y = qy
+            quat.z = qz
+            quat.w = qw
 
-            ang_vel = Vector3()
-            ang_vel.x = ang_velocity.x
-            ang_vel.y = ang_velocity.y
-            ang_vel.z = ang_velocity.z
+            gyro = Vector3()
+            gyro.x = gx
+            gyro.y = gy
+            gyro.z = gz
 
             lin_acc = Vector3()
-            lin_acc.x = lin_acceleration.x
-            lin_acc.y = lin_acceleration.y
-            lin_acc.z = lin_acceleration.z
+            lin_acc.x = lax
+            lin_acc.y = lay
+            lin_acc.z = laz
 
             msg.quaternion = quat
-            msg.angular_velocity = ang_vel
+            msg.angular_velocity = gyro
             msg.linear_acceleration = lin_acc
 
             self.publisher_.publish(msg)
             
-            self.get_logger().info(f"Successfully published first IMU Quaternion -> x: {quaternion.x}, y: {quaternion.y}, z: {quaternion.z}, w: {quaternion.w}", once = True)
+            self.get_logger().info(f"Successfully published first IMU Quaternion -> x: {qx}, y: {qy}, z: {qz}, w: {qw}", once = True)
 
         except (ValueError, IOError) as err:
             self.get_logger().error(f"IMU Error! {err}")
