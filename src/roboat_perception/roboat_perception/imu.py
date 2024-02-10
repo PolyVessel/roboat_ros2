@@ -52,7 +52,7 @@ class IMU(Node):
             lin_acc.y = lay
             lin_acc.z = laz
 
-            msg.quaternion = quat
+            msg.orientation = quat
             msg.angular_velocity = gyro
             msg.linear_acceleration = lin_acc
 
