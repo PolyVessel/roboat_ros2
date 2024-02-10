@@ -68,6 +68,11 @@ def main(args: List[str] | None = None) -> None:
     rclpy.init(args=args)
 
     imu_node = IMU()
+    
+    try:
+        rclpy.spin(imu_node)
+    except SystemExit:
+        rclpy.logging.get_logger("Quitting").info('Done')    
 
     imu_node.destroy_node()
     rclpy.shutdown()
