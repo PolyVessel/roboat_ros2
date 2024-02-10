@@ -22,8 +22,7 @@ class GPS(Node):
         try:
             while(True):
                 geo = self.gps.geo_coords()
-                cov = self.gps.geo_cov()
-
+                
                 if geo.numSV == 0:
                     self.get_logger().info("No GPS Signal", throttle_duration_sec=60)
                 
@@ -37,16 +36,8 @@ class GPS(Node):
                 msg.longitude = geo.lon
                 msg.latitude = geo.lat
                 msg.altitude = 0.001 * float(geo.height)
-                
-                NN = cov.posCovNN
-                NE = cov.posCovNE
-                ND = cov.posCovND
-                EE = cov.posCovEE
-                ED = cov.posCovED
-                DD = cov.posCovDD
-                # Following the convention here: https://www.ros.org/reps/rep-0105.html
-                msg.position_covariance = [EE, NE, ED, NE, NN, ND, ED, ND, DD]
-                msg.position_covariance_type = 3
+             
+                msg.position_covariance_type = 0
 
                 self.publisher_.publish(msg)
 
