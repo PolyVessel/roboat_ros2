@@ -40,8 +40,11 @@ class Radio(Node):
         buffer = self.radio_ser.read(size=100)
             #insert checks to see if radio sent data to buffer
         message_list = self.slip_driver.receive(buffer)
-        for bytes in message_list:
-            decoded = decode_packet(BitArray(bytes))
+        for encoded_message in message_list:
+            decoded = decode_packet(BitArray(encoded_message))
+            if decoded is None:
+                self.get_logger().error(f"Decode failed {encoded_message:02x}")
+                continue
             msg = decoded.data.bytes.decode('utf-8')
             
             self.get_logger().info("Message Recieved: " + msg)
