@@ -33,7 +33,7 @@ class Radio(Node):
         self.get_logger().info("Radio Initialized")
         self.set_normal_mode()
 
-        timer_period_sec = 1
+        timer_period_sec = 0.05
         self.timer = self.create_timer(timer_period_sec, self.read_from_radio) # Temperary Timer
     
     def read_from_radio(self): # Needs to be tested
