@@ -22,7 +22,7 @@ class GPS(Node):
         try:
             while(True):
                 geo = self.gps.geo_coords()
-
+                
                 if geo.numSV == 0:
                     self.get_logger().info("No GPS Signal", throttle_duration_sec=60)
                 
