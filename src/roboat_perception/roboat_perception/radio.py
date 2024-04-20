@@ -43,7 +43,7 @@ class Radio(Node):
         for encoded_message in message_list:
             decoded = decode_packet(BitArray(encoded_message))
             if decoded is None:
-                self.get_logger().error(f"Decode failed {encoded_message:02x}")
+                self.get_logger().error(f"Decode failed {encoded_message}")
                 continue
             msg = decoded.data.bytes.decode('utf-8')
             
