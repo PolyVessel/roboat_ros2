@@ -57,7 +57,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'recorder = roboat_thinking.recorder:main'
+            'recorder = roboat_thinking.recorder:main',
+            'msg_decoder = roboat_thinking.msg_decoder:main',
         ],
     },
     cmdclass={

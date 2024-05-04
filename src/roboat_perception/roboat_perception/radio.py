@@ -4,7 +4,8 @@ from time import sleep
 from typing import List, NamedTuple
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
+from std_msgs.msg import String, ByteMultiArray
+from roboat_interfaces.msg import RawData
 import subprocess
 import os
 from .data.dtp import create_packet, decode_packet
@@ -16,8 +17,8 @@ class Radio(Node):
         super().__init__('radio')
         self.slip_driver=Driver() #sliplib
 
-        self.publisher_ = self.create_publisher(String, 'recv', 10)
-        self.subscription = self.create_subscription(String, 'send', self.write_to_radio, 10)
+        self.publisher_ = self.create_publisher(RawData, '/radio/raw_recv', 10)
+        self.subscription = self.create_subscription(RawData, '/radio/raw_send', self.write_to_radio, 10)
 
         self.M0 = 17 #eletrical pin numbers
         self.M1 = 27
@@ -45,18 +46,15 @@ class Radio(Node):
             if decoded is None:
                 self.get_logger().error(f"Decode failed {encoded_message}")
                 continue
-            msg = decoded.data.bytes.decode('utf-8')
-            
-            self.get_logger().info("Message Recieved: " + msg)
-            self.publisher_.publish(msg)
+            msg = decoded.data.bytes
+            self.publisher_.publish(RawData(data=msg))
 
 
     
-    def write_to_radio(self,sendMSG):
+    def write_to_radio(self,sendMSG: RawData):
         self.block_until_radio_ready()
-        self.get_logger().info("Sending Message: " + sendMSG.data) 
         
-        msg_bits = Bits(sendMSG.data.encode('utf-8'))
+        msg_bits = Bits(sendMSG.data)
         packet = self.slip_driver.send(create_packet(msg_bits).bytes)
          
         self.radio_ser.write(packet)
