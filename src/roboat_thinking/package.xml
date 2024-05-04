@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>roboat_perception</name>
+  <name>roboat_thinking</name>
   <version>0.0.0</version>
-  <description>Roboats Sensors and Perception</description>
+  <description>Internal processes of the boat</description>
   <maintainer email="dylan@starink.com">Dylan Starink</maintainer>
   <license>MIT</license>
-
-  <depend>python3-sparkfun-ublox-gps-pip</depend>
-  <depend>python3-spidev-pip</depend>
+  
+  <depend>protobuf-dev</depend>
 
   <depend>python-bitstring-pip</depend>
+  <depend>python3-protobuf</depend>
   <depend>python3-bitstring</depend>
 
   <exec_depend>std_msgs</exec_depend>
