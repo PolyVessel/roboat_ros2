@@ -47,7 +47,7 @@ class Radio(Node):
                 self.get_logger().error(f"Decode failed {encoded_message}")
                 continue
             msg = decoded.data.bytes
-            self.publisher_.publish(RawData(data=msg))
+            self.publisher_.publish(RawData(data=[msg[i].to_bytes(1, 'big') for i in range(len(msg))]))
 
 
     
