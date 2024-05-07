@@ -6,7 +6,7 @@ from roboat_interfaces.msg import RawData
 import subprocess
 import os
 from bitstring import Bits, BitArray
-from .pb.radio_comms_pb2 import ToBoatCommand
+from .pb.radio_comms_pb2 import ToBoatCommand, ToShoreResponse
 from .pb.radio_comms_pb2 import EchoRequest
 
 class MessageDecoder(Node):
@@ -23,11 +23,22 @@ class MessageDecoder(Node):
         recieved_msg = ToBoatCommand()
         try:
             recieved_msg.ParseFromString(b''.join(msg.data))
-            print(recieved_msg.WhichOneof("command"))
+            msg_type = recieved_msg.WhichOneof("command")
+            if msg_type == "echo":
+                self.echo()
+            else:
+                self.get_logger().error(f"unhandled msg type: {msg_type}")
         except:
             self.get_logger().error(f"Invalid Decoded Msg: {msg.data}")
         
 
+    def echo(self):
+        # Send Response
+        msg_to_send = ToShoreResponse()
+        msg_to_send.response.echo.SetInParent()
+        encoded_bytes = msg_to_send.SerializeToString()
+        self.publisher_.publish([encoded_bytes[i].to_bytes(1, 'big') for i in range(len(encoded_bytes))])
+        
 
 def main(args=None):
     rclpy.init(args=args)
