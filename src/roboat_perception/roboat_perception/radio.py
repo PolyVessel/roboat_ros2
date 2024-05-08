@@ -54,7 +54,7 @@ class Radio(Node):
     def write_to_radio(self,sendMSG: RawData):
         self.block_until_radio_ready()
         
-        msg_bits = Bits(sendMSG.data)
+        msg_bits = Bits(b''.join(sendMSG.data))
         packet = self.slip_driver.send(create_packet(msg_bits).bytes)
          
         self.radio_ser.write(packet)
