@@ -30,7 +30,7 @@ class MessageDecoder(Node):
                 self.echo()
             elif msg_type == "control_status":
                 enabled = recieved_msg.control_status.enabled
-                set_control_status(True)
+                self.set_control_status(enabled)
             else:
                 self.get_logger().error(f"unhandled msg type: {msg_type}")
         except Exception as e:
