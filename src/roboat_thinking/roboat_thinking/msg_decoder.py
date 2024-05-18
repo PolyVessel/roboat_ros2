@@ -37,7 +37,7 @@ class MessageDecoder(Node):
             self.get_logger().error(f"Invalid Decoded Msg: {msg.data}, error: {e}")
     
     def set_control_status(self, enabled_status: bool):
-        self.enabled_publisher.publish(Bool(enabled_status))
+        self.enabled_publisher.publish(Bool(data=enabled_status))
         self.get_logger().info(f"Set Control Status to: {enabled_status}")
         msg_to_send = ToShoreResponse()
         msg_to_send.control_status.enabled = enabled_status
