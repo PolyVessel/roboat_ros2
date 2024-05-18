@@ -37,16 +37,18 @@ class MessageDecoder(Node):
             self.get_logger().error(f"Invalid Decoded Msg: {msg.data}, error: {e}")
     
     def set_control_status(self, enabled_status: bool):
-        self.enabled_publisher.publish(enabled_status)
+        self.enabled_publisher.publish(Bool(enabled_status))
         self.get_logger().info(f"Set Control Status to: {enabled_status}")
+        msg_to_send = ToShoreResponse()
+        msg_to_send.control_status.enabled = enabled_status
+        encoded_bytes = msg_to_send.SerializeToString()
+        self.raw_radio_publisher.publish(RawData(data=[encoded_bytes[i].to_bytes(1, 'big') for i in range(len(encoded_bytes))]))
 
     def echo(self):
         # Send Response
         msg_to_send = ToShoreResponse()
         msg_to_send.echo.SetInParent()
         encoded_bytes = msg_to_send.SerializeToString()
-        print(encoded_bytes)
-        print([encoded_bytes[i].to_bytes(1, 'big') for i in range(len(encoded_bytes))])
         self.raw_radio_publisher.publish(RawData(data=[encoded_bytes[i].to_bytes(1, 'big') for i in range(len(encoded_bytes))]))
        
         
