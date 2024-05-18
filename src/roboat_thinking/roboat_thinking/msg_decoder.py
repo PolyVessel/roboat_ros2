@@ -28,11 +28,17 @@ class MessageDecoder(Node):
             msg_type = recieved_msg.WhichOneof("command")
             if msg_type == "echo":
                 self.echo()
+            elif msg_type == "control_status":
+                enabled = recieved_msg.control_status.enabled
+                set_control_status(True)
             else:
                 self.get_logger().error(f"unhandled msg type: {msg_type}")
         except Exception as e:
             self.get_logger().error(f"Invalid Decoded Msg: {msg.data}, error: {e}")
-        
+    
+    def set_control_status(self, enabled_status: bool):
+        self.enabled_publisher.publish(enabled_status)
+        self.get_logger().info(f"Set Control Status to: {enabled_status}")
 
     def echo(self):
         # Send Response
