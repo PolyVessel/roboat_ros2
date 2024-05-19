@@ -59,6 +59,7 @@ class Radio(Node):
         
         self.get_logger().info(f"Packet sent: {packet}")
         self.radio_ser.write(packet)
+        self.radio_ser.flush()
 
     def self_test(self):
         self.set_sleep_mode()
