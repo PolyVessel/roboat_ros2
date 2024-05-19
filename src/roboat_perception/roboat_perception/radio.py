@@ -56,9 +56,9 @@ class Radio(Node):
         
         msg_bits = Bits(b''.join(sendMSG.data))
         packet = self.slip_driver.send(create_packet(msg_bits).bytes)
-         
+        
+        self.get_logger().info(f"Packet sent: {packet}")
         self.radio_ser.write(packet)
-        self.get_logger().info("Message Sent")
 
     def self_test(self):
         self.set_sleep_mode()
