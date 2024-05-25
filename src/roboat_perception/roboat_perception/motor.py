@@ -24,8 +24,8 @@ class Motor(Node):
         self.enabled = False
         
         self.enabled_status = self.create_subscription(Bool, '/signals/enabled', self.enabled_handler,  10)
-        self.enabled_status = self.create_subscription(Float32, '/motor/left', self.left_motor_control,  10)
-        self.enabled_status = self.create_subscription(Float32, '/motor/right', self.right_motor_control,  10)
+        self.left_motor_sub = self.create_subscription(Float32, '/motor/left', self.left_motor_control,  10)
+        self.right_motor_sub = self.create_subscription(Float32, '/motor/right', self.right_motor_control,  10)
 
     def normalized_to_degrees(normalized_num: int):
         normalized_num = max(0, min(1.0, normalized_num))
