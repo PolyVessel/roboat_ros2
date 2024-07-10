@@ -1,4 +1,4 @@
 [submodule "protos"]
 	path = protos
-	url = https://github.com/PolyVessel/protos.git
+	url = git@github.com-protos:PolyVessel/protos.git
 	branch = main
