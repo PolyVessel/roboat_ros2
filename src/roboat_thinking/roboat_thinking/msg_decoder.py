@@ -64,7 +64,7 @@ class MessageDecoder(Node):
 
     def set_motor(self, left_power: float, right_power: float):
         self.left_motor.publish(Float32(data=left_power))
-        self.left_motor.publish(Float32(data=right_power))
+        self.right_motor.publish(Float32(data=right_power))
         
         msg_to_send = ToShoreResponse()
         msg_to_send.set_motor.left_power = left_power
